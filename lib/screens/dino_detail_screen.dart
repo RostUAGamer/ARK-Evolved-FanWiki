@@ -6,8 +6,13 @@ import '../widgets/cryopod_avatar.dart';
 
 class DinoDetailScreen extends StatefulWidget {
   final Dinosaur dino;
+  final ScrollController? scrollController;
 
-  const DinoDetailScreen({super.key, required this.dino});
+  const DinoDetailScreen({
+    super.key,
+    required this.dino,
+    this.scrollController,
+  });
 
   @override
   State<DinoDetailScreen> createState() => _DinoDetailScreenState();
@@ -44,6 +49,7 @@ class _DinoDetailScreenState extends State<DinoDetailScreen> {
     return Scaffold(
       body: ArkScaffoldBackground(
         child: CustomScrollView(
+          controller: widget.scrollController,
           physics: const BouncingScrollPhysics(),
           slivers: [
             // Sci-Fi ARK AppBar
@@ -254,78 +260,91 @@ class _DinoDetailScreenState extends State<DinoDetailScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'ОБРАНИЙ РІВЕНЬ:',
-                    style: TextStyle(
-                      color: Color(0xFF80D8FF),
-                      fontSize: 11,
-                      fontWeight: FontWeight.bold,
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'ОБРАНИЙ РІВЕНЬ:',
+                      style: TextStyle(
+                        color: Color(0xFF80D8FF),
+                        fontSize: 11,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 2),
-                  Row(
-                    children: [
-                      Text(
-                        'LVL $_selectedLevel',
+                    const SizedBox(height: 2),
+                    FittedBox(
+                      fit: BoxFit.scaleDown,
+                      alignment: Alignment.centerLeft,
+                      child: Row(
+                        children: [
+                          Text(
+                            'LVL $_selectedLevel',
+                            style: const TextStyle(
+                              color: Color(0xFF00E5FF),
+                              fontSize: 24,
+                              fontWeight: FontWeight.w900,
+                              fontFamily: 'monospace',
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFF7B1FA2).withOpacity(0.3),
+                              borderRadius: BorderRadius.circular(4),
+                              border: Border.all(
+                                color: const Color(0xFFCE93D8).withOpacity(0.6),
+                                width: 0.8,
+                              ),
+                            ),
+                            child: Text(
+                              '▼ ${widget.dino.torporDrainRate}/с',
+                              style: const TextStyle(
+                                color: Color(0xFFE1BEE7),
+                                fontSize: 11,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    const Text(
+                      'ТОРПОР (ОГЛУШЕННЯ):',
+                      style: TextStyle(
+                        color: Color(0xFFCE93D8),
+                        fontSize: 11,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    FittedBox(
+                      fit: BoxFit.scaleDown,
+                      alignment: Alignment.centerRight,
+                      child: Text(
+                        currentTorpor.toStringAsFixed(1),
                         style: const TextStyle(
-                          color: Color(0xFF00E5FF),
-                          fontSize: 26,
+                          color: Color(0xFFE040FB),
+                          fontSize: 24,
                           fontWeight: FontWeight.w900,
                           fontFamily: 'monospace',
+                          shadows: [
+                            Shadow(color: Color(0xFFE040FB), blurRadius: 10),
+                          ],
                         ),
                       ),
-                      const SizedBox(width: 8),
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                        decoration: BoxDecoration(
-                          color: const Color(0xFF7B1FA2).withOpacity(0.3),
-                          borderRadius: BorderRadius.circular(4),
-                          border: Border.all(
-                            color: const Color(0xFFCE93D8).withOpacity(0.6),
-                            width: 0.8,
-                          ),
-                        ),
-                        child: Text(
-                          '▼ ${widget.dino.torporDrainRate}/с',
-                          style: const TextStyle(
-                            color: Color(0xFFE1BEE7),
-                            fontSize: 11,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  const Text(
-                    'ТОРПОР (ОГЛУШЕННЯ):',
-                    style: TextStyle(
-                      color: Color(0xFFCE93D8),
-                      fontSize: 11,
-                      fontWeight: FontWeight.bold,
                     ),
-                  ),
-                  const SizedBox(height: 2),
-                  Text(
-                    currentTorpor.toStringAsFixed(1),
-                    style: const TextStyle(
-                      color: Color(0xFFE040FB),
-                      fontSize: 26,
-                      fontWeight: FontWeight.w900,
-                      fontFamily: 'monospace',
-                      shadows: [
-                        Shadow(color: Color(0xFFE040FB), blurRadius: 10),
-                      ],
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ],
           ),

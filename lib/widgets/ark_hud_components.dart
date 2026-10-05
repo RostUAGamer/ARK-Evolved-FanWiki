@@ -154,14 +154,17 @@ class ArkCyberContainer extends StatelessWidget {
                     Icon(icon, size: 16, color: const Color(0xFF00E5FF)),
                     const SizedBox(width: 8),
                   ],
-                  Text(
-                    title!.toUpperCase(),
-                    style: const TextStyle(
-                      color: Color(0xFF80D8FF),
-                      fontSize: 12.5,
-                      fontWeight: FontWeight.w900,
-                      letterSpacing: 1.2,
-                      fontFamily: 'monospace',
+                  Expanded(
+                    child: Text(
+                      title!.toUpperCase(),
+                      style: const TextStyle(
+                        color: Color(0xFF80D8FF),
+                        fontSize: 12.5,
+                        fontWeight: FontWeight.w900,
+                        letterSpacing: 1.2,
+                        fontFamily: 'monospace',
+                      ),
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                 ],

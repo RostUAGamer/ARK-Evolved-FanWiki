@@ -3,6 +3,8 @@ import '../models/dinosaur.dart';
 import '../data/dino_database.dart';
 import '../widgets/ark_hud_components.dart';
 import '../widgets/cryopod_avatar.dart';
+import 'breeding_calculator_screen.dart';
+import 'ark_maps_screen.dart';
 
 class DinoDetailScreen extends StatefulWidget {
   final Dinosaur dino;
@@ -120,6 +122,9 @@ class _DinoDetailScreenState extends State<DinoDetailScreen> {
                   children: [
                     // 1. Creature Hero Card (Cryopod Viewport & Basic Info)
                     _buildHeroHeader(),
+
+                    // Quick Jump to Breeding & Maps
+                    _buildQuickActionButtons(),
 
                     // 2. Interactive Level & Torpor Calculator
                     _buildTorporCalculator(currentTorpor, maxTorpor150),
@@ -244,6 +249,99 @@ class _DinoDetailScreenState extends State<DinoDetailScreen> {
           fontWeight: FontWeight.w800,
           letterSpacing: 0.3,
         ),
+      ),
+    );
+  }
+
+  Widget _buildQuickActionButtons() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
+      child: Row(
+        children: [
+          Expanded(
+            child: InkWell(
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => BreedingCalculatorScreen(
+                      initialCreatureId: widget.dino.id,
+                    ),
+                  ),
+                );
+              },
+              borderRadius: BorderRadius.circular(8),
+              child: Container(
+                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+                decoration: BoxDecoration(
+                  color: const Color(0xFF002238),
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(
+                    color: const Color(0xFF00E5FF).withOpacity(0.7),
+                    width: 1.0,
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Icon(Icons.biotech_rounded, color: Color(0xFF00E5FF), size: 18),
+                    SizedBox(width: 6),
+                    Text(
+                      'РОЗВЕДЕННЯ',
+                      style: TextStyle(
+                        color: Color(0xFF00E5FF),
+                        fontSize: 11.5,
+                        fontWeight: FontWeight.w900,
+                        letterSpacing: 0.5,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: InkWell(
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => ArkMapsScreen(
+                      initialFilterSubType: widget.dino.id,
+                    ),
+                  ),
+                );
+              },
+              borderRadius: BorderRadius.circular(8),
+              child: Container(
+                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+                decoration: BoxDecoration(
+                  color: const Color(0xFF002A30),
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(
+                    color: const Color(0xFF00E676).withOpacity(0.7),
+                    width: 1.0,
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Icon(Icons.map_rounded, color: Color(0xFF00E676), size: 18),
+                    SizedBox(width: 6),
+                    Text(
+                      'НА КАРТІ',
+                      style: TextStyle(
+                        color: Color(0xFF00E676),
+                        fontSize: 11.5,
+                        fontWeight: FontWeight.w900,
+                        letterSpacing: 0.5,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

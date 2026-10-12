@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'screens/dino_list_screen.dart';
+import 'screens/main_navigation_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -49,7 +49,7 @@ class ArkEncyclopediaApp extends StatelessWidget {
         ),
         dividerColor: const Color(0xFF003859),
       ),
-      home: const DinoListScreen(),
+      home: const MainNavigationScreen(),
     );
   }
 }
